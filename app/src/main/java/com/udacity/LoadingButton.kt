@@ -171,8 +171,10 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        val x = (widthSize/2).toFloat()
-        rect.set(x, 0f, (widthSize).toFloat(), (heightSize + 20).toFloat())
+        val x = ((widthSize)/1.4).toFloat()
+        val y = ((heightSize)/2.8).toFloat()
+        rect.set(0f,0f, (widthSize/12).toFloat(), (heightSize/2.5).toFloat())
+        rect.offset(x,y)
     }
 
     private class Arc(val start: Float, val sweep: Float, val color: Int)
