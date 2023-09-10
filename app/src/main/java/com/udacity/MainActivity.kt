@@ -19,11 +19,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.udacity.databinding.ActivityMainBinding
 import com.udacity.util.sendNotification
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
+const val repositoryNameKey = "DownloadedRepositoryNameKey"
+ const val repositoryStatusKey = "DownloadedRepositoryStatusKey"
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -99,25 +98,18 @@ class MainActivity : AppCompatActivity() {
         val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
         downloadID =
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
-
-        val delayMillis: Long = 2000
-        GlobalScope.launch {
-            delay(delayMillis)
-            sendNotification()
-        }
     }
 
     private fun showToast() {
-
         toast.show()
     }
 
-    private fun sendNotification(){
+    private fun sendNotification(intent: Intent) {
         val notificationManager = ContextCompat.getSystemService(
             this,
             NotificationManager::class.java
         ) as NotificationManager
-        notificationManager.sendNotification(getString(R.string.notification_description), this)
+        notificationManager.sendNotification(getString(R.string.notification_description), this, intent)
     }
 
     private fun createChannel(channelId: String, channelName: String) {
@@ -138,10 +130,10 @@ class MainActivity : AppCompatActivity() {
 
 
     companion object {
-        private const val URL =
+        const val URL =
             "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
-        private const val GLIDE_URL = "https://github.com/bumptech/glide"
-        private const val RETROFIT_URL = "https://github.com/square/retrofit"
+        const val GLIDE_URL = "https://github.com/bumptech/glide"
+        const val RETROFIT_URL = "https://github.com/square/retrofit"
         private const val CHANNEL_ID = "channelId"
     }
 }
