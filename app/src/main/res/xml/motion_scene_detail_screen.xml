@@ -1,66 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="urn:oasis:names:tc:xliff:document:1.2">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
     <Transition
         app:constraintSetStart="@+id/start"
         app:constraintSetEnd="@+id/end">
         <OnSwipe
-            app:touchAnchorId="@id/ok_btn" />
+            app:dragDirection="dragUp"
+            app:touchAnchorId="@+id/ok_btn" />
     </Transition>
     
     <ConstraintSet android:id="@+id/start">
- 
         <Constraint
             android:id="@+id/ok_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_24"
+            android:layout_marginEnd="@dimen/spacing_24"
+            android:layout_marginBottom="@dimen/spacing_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textColor="@color/white"
-            android:background="@color/colorAccent"
-            android:layout_margin="@dimen/spacing_24"
-            android:text="@string/ok"
-            android:textSize="@dimen/default_text_size"/>
+            app:layout_constraintStart_toStartOf="parent" />
        
         <Constraint
             android:id="@+id/status_content"
             android:alpha="1.0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/file_name_title"
-            app:layout_constraintTop_toBottomOf="@id/file_name_title"
-            android:layout_marginTop="@dimen/big_spacing"
-            android:textSize="@dimen/detail_screen_text_size"
-            android:text="@string/status"/>
-
+            app:layout_constraintStart_toStartOf="@id/file_name_content"
+            app:layout_constraintTop_toTopOf="@id/status_title" />
     </ConstraintSet>
-
-    <ConstraintSet android:id="@+id/end">
     
+    
+    <ConstraintSet android:id="@+id/end">
         <Constraint
             android:id="@+id/ok_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_24"
+            android:layout_marginEnd="@dimen/spacing_24"
+            android:layout_marginBottom="@dimen/spacing_24"
             app:layout_constraintTop_toBottomOf="@id/status_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textColor="@color/white"
-            android:background="@color/colorAccent"
-            android:layout_margin="@dimen/spacing_24"
-            android:text="@string/ok"
-            android:textSize="@dimen/default_text_size"/>
+            app:layout_constraintStart_toStartOf="parent" />
     
         <Constraint
             android:id="@+id/status_content"
             android:alpha="0.0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/file_name_title"
-            app:layout_constraintTop_toBottomOf="@id/file_name_title"
-            android:layout_marginTop="@dimen/big_spacing"
-            android:textSize="@dimen/detail_screen_text_size"
-            android:text="@string/status" />
+            app:layout_constraintStart_toStartOf="@id/file_name_content"
+            app:layout_constraintTop_toTopOf="@id/status_title" />
     </ConstraintSet>
 
 </MotionScene>

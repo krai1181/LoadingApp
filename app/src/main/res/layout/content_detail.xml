@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/file_name_title"
             app:layout_constraintTop_toBottomOf="@id/file_name_title"
-            android:layout_marginTop="@dimen/big_spacing"
+            android:layout_marginTop="@dimen/spacing_48"
             android:textSize="@dimen/detail_screen_text_size"
             android:text="@string/status"/>
         <TextView
@@ -48,23 +48,23 @@
             android:layout_height="wrap_content"
             android:textColor="@color/backgroundColor"
             app:layout_constraintTop_toTopOf="@id/status_title"
-            app:layout_constraintEnd_toEndOf="@id/file_name_content"
             app:layout_constraintStart_toStartOf="@id/file_name_content"
             android:textSize="@dimen/detail_screen_text_size"
             tools:text="Success"/>
 
-        <Button
-            android:id="@+id/ok_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textColor="@color/white"
-            android:background="@color/colorAccent"
-            android:layout_margin="@dimen/spacing_24"
-            android:text="@string/ok"
-            android:textSize="@dimen/default_text_size"/>
+                <Button
+                    android:id="@+id/ok_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/medium_spacing"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/colorAccent"
+                    android:text="@string/ok"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/default_text_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
