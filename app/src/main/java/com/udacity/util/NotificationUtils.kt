@@ -20,7 +20,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         applicationContext,
         REQUEST_CODE,
         contentIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT
+        PendingIntent.FLAG_IMMUTABLE
     )
     
     
@@ -35,9 +35,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .addAction(R.drawable.ic_downloading,
             applicationContext.getString(R.string.notification_button), contentPendingIntent)
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
     
-
         notify(NOTIFICATION_ID, builder.build())
 
 }

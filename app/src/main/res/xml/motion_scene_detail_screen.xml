@@ -5,10 +5,8 @@
     <Transition
         app:constraintSetStart="@+id/start"
         app:constraintSetEnd="@+id/end"
-        app:duration="1000">
-        <OnClick
-            app:targetId="@id/status_content"
-            app:clickAction="toggle"/>
+        app:autoTransition="animateToEnd"
+        app:duration="2000">
     </Transition>
     
     <ConstraintSet android:id="@+id/start">
@@ -17,11 +15,9 @@
             android:textColor="@color/backgroundColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:alpha="0.0"
             app:layout_constraintStart_toStartOf="@id/file_name_content"
             app:layout_constraintTop_toTopOf="@id/status_title" >
-        <CustomAttribute
-            app:attributeName="textColor"
-            app:customColorValue="@color/backgroundColor" />
         </Constraint>
      
     </ConstraintSet>
@@ -32,11 +28,9 @@
             android:id="@+id/status_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:alpha="1.0"
             app:layout_constraintStart_toStartOf="@id/file_name_content"
             app:layout_constraintTop_toTopOf="@id/status_title" >
-        <CustomAttribute
-            app:attributeName="textColor"
-            app:customColorValue="@color/green" />
         </Constraint>
 
     </ConstraintSet>

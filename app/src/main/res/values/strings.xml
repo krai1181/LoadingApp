@@ -8,6 +8,7 @@
     <string name="notification_button">See changes</string>
     <string name="notification_channel_id">channelId</string>
     <string name="notification_channel_name">Downloading</string>
+    <string name="notification_permission_toast_message">Unlock the complete app experience by enabling notifications. With notifications turned on, you will receive real time downloading status.</string>
 
     <string name="button_name">Click me</string>
     <string name="button_loading">We are loading </string>

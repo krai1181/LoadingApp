@@ -1,39 +1,36 @@
 package com.udacity
 
+import android.Manifest
 import android.app.DownloadManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.udacity.databinding.ActivityMainBinding
-import com.udacity.util.sendNotification
 
 
 const val repositoryNameKey = "DownloadedRepositoryNameKey"
- const val repositoryStatusKey = "DownloadedRepositoryStatusKey"
+const val repositoryStatusKey = "DownloadedRepositoryStatusKey"
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     private var downloadID: Long = 0
 
-    private lateinit var notificationManager: NotificationManager
-    private lateinit var pendingIntent: PendingIntent
-    private lateinit var action: NotificationCompat.Action
+
     private lateinit var customButton: LoadingButton
     private lateinit var toast: Toast
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
     private var baseURL = ""
 
@@ -43,9 +40,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
+       
         customButton = binding.mainContent.customButton
 
-        registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            customButton.isEnabled = false
+
+            requestPermissionLauncher =
+                registerForActivityResult(ActivityResultContracts.RequestPermission())
+                { isGranted: Boolean ->
+                    if (isGranted) {
+                        customButton.isEnabled = true
+                    } else {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.notification_permission_toast_message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+        }
+
+
 
         customButton.setOnClickListener {
             customButton.hasDownloadingCompleted()
@@ -53,7 +69,18 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        
+        //Handle radio button click
         binding.mainContent.radioGroup.setOnCheckedChangeListener { radioGroup, checkedId ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    )
+                ) {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                } 
+            }
             baseURL = when (checkedId) {
                 R.id.glide_radio_btn -> GLIDE_URL
                 R.id.load_app_radio_btn -> URL
@@ -74,12 +101,6 @@ class MainActivity : AppCompatActivity() {
         toast.duration = Toast.LENGTH_LONG
         toast.view = layout
 
-    }
-
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-        }
     }
 
     private fun download() {
@@ -104,14 +125,6 @@ class MainActivity : AppCompatActivity() {
         toast.show()
     }
 
-    private fun sendNotification(intent: Intent) {
-        val notificationManager = ContextCompat.getSystemService(
-            this,
-            NotificationManager::class.java
-        ) as NotificationManager
-        notificationManager.sendNotification(getString(R.string.notification_description), this, intent)
-    }
-
     private fun createChannel(channelId: String, channelName: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
@@ -134,6 +147,5 @@ class MainActivity : AppCompatActivity() {
             "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
         const val GLIDE_URL = "https://github.com/bumptech/glide"
         const val RETROFIT_URL = "https://github.com/square/retrofit"
-        private const val CHANNEL_ID = "channelId"
     }
 }
