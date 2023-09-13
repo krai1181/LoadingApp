@@ -40,6 +40,7 @@ class LoadingButton @JvmOverloads constructor(
 
     private val indicatorValueAnimator = ValueAnimator.ofInt(0, 360).apply {
         duration = 2000
+        repeatCount = ValueAnimator.INFINITE
         interpolator = LinearInterpolator()
         addUpdateListener { 
             currentSweepAngle = it.animatedValue as Int
