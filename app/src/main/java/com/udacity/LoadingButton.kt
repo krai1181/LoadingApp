@@ -143,7 +143,6 @@ class LoadingButton @JvmOverloads constructor(
             }
 
 
-            // canvas.drawCircle((widthSize / 1.3).toFloat(), (heightSize / 2).toFloat(), radius, paint)
         } else {
             paint.color = btnColor
             canvas.drawRect(0f, 0f, widthSize.toFloat(), heightSize.toFloat(), paint)
@@ -156,7 +155,7 @@ class LoadingButton @JvmOverloads constructor(
 
         paint.color = textColor
         canvas.drawText(buttonText, (widthSize / 2).toFloat(), ((heightSize + 20) / 2).toFloat(), paint)
-
+        valueAnimator.repeatCount = ValueAnimator.INFINITE
 
     }
 
