@@ -8,7 +8,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat
+import com.udacity.ButtonState
 import com.udacity.DetailActivity
+import com.udacity.LoadingButton
 import com.udacity.R
 import com.udacity.repositoryNameKey
 import com.udacity.repositoryStatusKey
@@ -30,6 +32,7 @@ class DownloadReceiver: BroadcastReceiver() {
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
         val action = intent.action
         if (action == DownloadManager.ACTION_DOWNLOAD_COMPLETE) {
+            LoadingButton.buttonState = ButtonState.Completed
             val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             val query = DownloadManager.Query()
             query.setFilterById(id)

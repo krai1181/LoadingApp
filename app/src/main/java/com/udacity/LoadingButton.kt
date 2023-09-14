@@ -31,18 +31,20 @@ class LoadingButton @JvmOverloads constructor(
     private var currentSweepAngle = 0
 
 
-
     private var valueAnimator: ValueAnimator
 
-    private var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { p, old, new ->
 
+    companion object {
+        var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { p, old, new ->
+
+        }
     }
 
     private val indicatorValueAnimator = ValueAnimator.ofInt(0, 360).apply {
         duration = 2000
         repeatCount = ValueAnimator.INFINITE
         interpolator = LinearInterpolator()
-        addUpdateListener { 
+        addUpdateListener {
             currentSweepAngle = it.animatedValue as Int
             invalidate()
             requestLayout()
@@ -51,9 +53,6 @@ class LoadingButton @JvmOverloads constructor(
     private val updateAnimatorListener = ValueAnimator.AnimatorUpdateListener {
         progress = (it.animatedValue as Float).toDouble()
 
-        if (progress == 100.0) {
-            buttonState = ButtonState.Completed
-        }
         invalidate()
         requestLayout()
     }
@@ -123,19 +122,23 @@ class LoadingButton @JvmOverloads constructor(
             //Animate indicator
             if (currentSweepAngle > arc.start + arc.sweep) {
                 paint.color = arc.color
-                canvas.drawArc(rect,
+                canvas.drawArc(
+                    rect,
                     arc.start,
                     arc.sweep,
                     true,
-                    paint)
+                    paint
+                )
             } else {
                 if (currentSweepAngle > arc.start) {
                     paint.color = arc.color
-                    canvas.drawArc(rect,
+                    canvas.drawArc(
+                        rect,
                         arc.start,
                         currentSweepAngle - arc.start,
                         true,
-                        paint)
+                        paint
+                    )
                 }
             }
 
@@ -172,10 +175,10 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        val x = ((widthSize)/1.4).toFloat()
-        val y = ((heightSize)/2.8).toFloat()
-        rect.set(0f,0f, (widthSize/12).toFloat(), (heightSize/2.5).toFloat())
-        rect.offset(x,y)
+        val x = ((widthSize) / 1.4).toFloat()
+        val y = ((heightSize) / 2.8).toFloat()
+        rect.set(0f, 0f, (widthSize / 12).toFloat(), (heightSize / 2.5).toFloat())
+        rect.offset(x, y)
     }
 
     private class Arc(val start: Float, val sweep: Float, val color: Int)
